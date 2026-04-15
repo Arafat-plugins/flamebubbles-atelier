@@ -1,0 +1,60 @@
+/*
+Theme Name: Flamebubbles Atelier
+Theme URI: https://flamebubbles.local/
+Author: Codex
+Author URI: https://openai.com/
+Description: A custom premium WooCommerce fashion theme for Flamebubbles, built for editorial product storytelling and high-performance storefront experiences.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 7.4
+Text Domain: flamebubbles-atelier
+Tags: ecommerce, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, woocommerce
+*/
+
+/*
+ * Core theme styles are loaded from assets/css/*.css.
+ * This file exists primarily for WordPress theme metadata and light global fallbacks.
+ */
+
+:root {
+	--fb-site-bg: #f6f1ea;
+	--fb-site-text: #181511;
+	--fb-site-accent: #9f5d3b;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	background: var(--fb-site-bg);
+	color: var(--fb-site-text);
+}
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.screen-reader-text:focus {
+	top: 1rem;
+	left: 1rem;
+	width: auto;
+	height: auto;
+	padding: 0.75rem 1rem;
+	margin: 0;
+	overflow: visible;
+	clip: auto;
+	background: #111;
+	color: #fff;
+	z-index: 99999;
+}

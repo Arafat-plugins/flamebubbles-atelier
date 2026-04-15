@@ -1,0 +1,207 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1380px"
+    },
+    "color": {
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "palette": [
+        {
+          "slug": "ivory",
+          "name": "Ivory",
+          "color": "#f6f1ea"
+        },
+        {
+          "slug": "obsidian",
+          "name": "Obsidian",
+          "color": "#111111"
+        },
+        {
+          "slug": "charcoal",
+          "name": "Charcoal",
+          "color": "#2a241f"
+        },
+        {
+          "slug": "porcelain",
+          "name": "Porcelain",
+          "color": "#fffdf9"
+        },
+        {
+          "slug": "sand",
+          "name": "Sand",
+          "color": "#d8c8b8"
+        },
+        {
+          "slug": "copper",
+          "name": "Copper",
+          "color": "#9f5d3b"
+        },
+        {
+          "slug": "olive",
+          "name": "Muted Olive",
+          "color": "#6f7464"
+        },
+        {
+          "slug": "mist",
+          "name": "Mist",
+          "color": "#e7e2db"
+        }
+      ]
+    },
+    "spacing": {
+      "units": [
+        "px",
+        "rem",
+        "vh",
+        "vw",
+        "%"
+      ],
+      "spacingSizes": [
+        {
+          "name": "2XS",
+          "slug": "2xs",
+          "size": "0.5rem"
+        },
+        {
+          "name": "XS",
+          "slug": "xs",
+          "size": "0.75rem"
+        },
+        {
+          "name": "S",
+          "slug": "s",
+          "size": "1rem"
+        },
+        {
+          "name": "M",
+          "slug": "m",
+          "size": "1.5rem"
+        },
+        {
+          "name": "L",
+          "slug": "l",
+          "size": "2rem"
+        },
+        {
+          "name": "XL",
+          "slug": "xl",
+          "size": "3rem"
+        },
+        {
+          "name": "2XL",
+          "slug": "2xl",
+          "size": "4.5rem"
+        },
+        {
+          "name": "3XL",
+          "slug": "3xl",
+          "size": "7rem"
+        }
+      ]
+    },
+    "typography": {
+      "defaultFontSizes": false,
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "fontFamily": "\"Bodoni 72\", \"Didot\", \"Iowan Old Style\", \"Palatino Linotype\", serif",
+          "name": "Atelier Display",
+          "slug": "display"
+        },
+        {
+          "fontFamily": "\"Avenir Next\", \"Helvetica Neue\", \"Segoe UI\", sans-serif",
+          "name": "Maison Sans",
+          "slug": "body"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "xs",
+          "size": "0.8125rem",
+          "name": "XS"
+        },
+        {
+          "slug": "s",
+          "size": "0.9375rem",
+          "name": "S"
+        },
+        {
+          "slug": "m",
+          "size": "1rem",
+          "name": "M"
+        },
+        {
+          "slug": "l",
+          "size": "1.125rem",
+          "name": "L"
+        },
+        {
+          "slug": "xl",
+          "size": "1.5rem",
+          "name": "XL"
+        },
+        {
+          "slug": "2xl",
+          "size": "2.25rem",
+          "name": "2XL"
+        },
+        {
+          "slug": "3xl",
+          "size": "3.5rem",
+          "name": "3XL"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#f6f1ea",
+      "text": "#181511"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--body)",
+      "lineHeight": "1.6"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--display)",
+          "fontWeight": "600",
+          "lineHeight": "1.05"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "#181511"
+        },
+        ":hover": {
+          "color": {
+            "text": "#9f5d3b"
+          }
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "999px"
+        },
+        "spacing": {
+          "padding": {
+            "top": "0.95rem",
+            "right": "1.5rem",
+            "bottom": "0.95rem",
+            "left": "1.5rem"
+          }
+        },
+        "typography": {
+          "fontSize": "0.95rem",
+          "fontWeight": "600"
+        }
+      }
+    }
+  }
+}
