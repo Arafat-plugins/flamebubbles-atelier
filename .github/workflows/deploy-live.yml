@@ -13,6 +13,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
 
     steps:
       - name: Checkout repository
@@ -98,16 +99,25 @@ jobs:
             fi
           fi
 
+          echo "Deploy protocol: $DEPLOY_PROTOCOL"
+          echo "Deploy port: $DEPLOY_PORT"
+          echo "Deploy target path: $DEPLOY_REMOTE_PATH"
+
           lftp -u "$DEPLOY_USERNAME","$DEPLOY_PASSWORD" -p "$DEPLOY_PORT" "$DEPLOY_PROTOCOL://$DEPLOY_HOST" <<EOF
           set cmd:fail-exit yes
           set net:max-retries 2
-          set net:timeout 20
-          set net:reconnect-interval-base 5
+          set net:timeout 10
+          set net:reconnect-interval-base 3
           set ssl:verify-certificate no
           set sftp:auto-confirm yes
-          mirror -R ./ "$DEPLOY_REMOTE_PATH" \
+          set ftp:passive-mode true
+          mkdir -p "$DEPLOY_REMOTE_PATH"
+          cd "$DEPLOY_REMOTE_PATH"
+          pwd
+          mirror -R ./ ./ \
             --verbose \
             --parallel=2 \
+            --only-newer \
             --exclude-glob .git \
             --exclude-glob .gitignore \
             --exclude-glob .github \
