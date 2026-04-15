@@ -34,8 +34,17 @@ jobs:
           DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
           DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
         run: |
           set -eu
+
+          DEPLOY_HOST="${DEPLOY_HOST:-$FTP_SERVER}"
+          DEPLOY_USERNAME="${DEPLOY_USERNAME:-$FTP_USERNAME}"
+          DEPLOY_PASSWORD="${DEPLOY_PASSWORD:-$FTP_PASSWORD}"
+          DEPLOY_REMOTE_PATH="${DEPLOY_REMOTE_PATH:-$FTP_SERVER_DIR}"
 
           missing=""
 
@@ -57,11 +66,37 @@ jobs:
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_PROTOCOL: ${{ secrets.DEPLOY_PROTOCOL }}
           DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+          FTP_PROTOCOL: ${{ secrets.FTP_PROTOCOL }}
         run: |
           set -eu
 
-          DEPLOY_PORT="${DEPLOY_PORT:-22}"
-          DEPLOY_PROTOCOL="${DEPLOY_PROTOCOL:-sftp}"
+          DEPLOY_HOST="${DEPLOY_HOST:-$FTP_SERVER}"
+          DEPLOY_USERNAME="${DEPLOY_USERNAME:-$FTP_USERNAME}"
+          DEPLOY_PASSWORD="${DEPLOY_PASSWORD:-$FTP_PASSWORD}"
+          DEPLOY_REMOTE_PATH="${DEPLOY_REMOTE_PATH:-$FTP_SERVER_DIR}"
+          DEPLOY_PORT="${DEPLOY_PORT:-$FTP_PORT}"
+          DEPLOY_PROTOCOL="${DEPLOY_PROTOCOL:-$FTP_PROTOCOL}"
+
+          if [ -z "$DEPLOY_PROTOCOL" ]; then
+            if [ -n "$FTP_SERVER" ] && [ "$DEPLOY_HOST" = "$FTP_SERVER" ]; then
+              DEPLOY_PROTOCOL="ftp"
+            else
+              DEPLOY_PROTOCOL="sftp"
+            fi
+          fi
+
+          if [ -z "$DEPLOY_PORT" ]; then
+            if [ "$DEPLOY_PROTOCOL" = "ftp" ] || [ "$DEPLOY_PROTOCOL" = "ftps" ]; then
+              DEPLOY_PORT="21"
+            else
+              DEPLOY_PORT="22"
+            fi
+          fi
 
           lftp -u "$DEPLOY_USERNAME","$DEPLOY_PASSWORD" -p "$DEPLOY_PORT" "$DEPLOY_PROTOCOL://$DEPLOY_HOST" <<EOF
           set cmd:fail-exit yes

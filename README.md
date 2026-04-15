@@ -78,6 +78,18 @@ Optional secrets:
 - `DEPLOY_PORT`
 - `DEPLOY_PROTOCOL`
 
+Legacy secret names also work:
+
+- `FTP_SERVER`
+- `FTP_USERNAME`
+- `FTP_PASSWORD`
+- `FTP_SERVER_DIR`
+
+Optional legacy values:
+
+- `FTP_PORT`
+- `FTP_PROTOCOL`
+
 ### Example values
 
 For many WordPress hosts:
