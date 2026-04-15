@@ -52,6 +52,62 @@ theme.json
 - Styles: `assets/css/`
 - Scripts: `assets/js/`
 
+## GitHub Auto Deploy
+
+This theme includes a GitHub Actions workflow at `.github/workflows/deploy-live.yml`.
+
+When you push to the `main` branch, GitHub Actions can deploy the theme directly to your live WordPress server.
+
+### Recommended deploy method
+
+- `sftp` is recommended
+- `ftp` or `ftps` can also be used if your hosting requires it
+
+### Required GitHub repository secrets
+
+Add these in:
+`GitHub Repo -> Settings -> Secrets and variables -> Actions`
+
+- `DEPLOY_HOST`
+- `DEPLOY_USERNAME`
+- `DEPLOY_PASSWORD`
+- `DEPLOY_REMOTE_PATH`
+
+Optional secrets:
+
+- `DEPLOY_PORT`
+- `DEPLOY_PROTOCOL`
+
+### Example values
+
+For many WordPress hosts:
+
+- `DEPLOY_PROTOCOL`: `sftp`
+- `DEPLOY_PORT`: `22`
+- `DEPLOY_REMOTE_PATH`: `/home/your-user/domains/your-domain.com/public_html/wp-content/themes/flamebubbles-atelier`
+
+If you use Hostinger, the remote path is often similar to:
+
+- `/home/u123456789/domains/your-domain.com/public_html/wp-content/themes/flamebubbles-atelier`
+
+### How deploy works
+
+- On every push to `main`, GitHub Actions checks PHP syntax
+- It connects to your server using `lftp`
+- It uploads the theme files from the repository root to your live theme directory
+- It does not upload `.git`, `.github`, `.gitignore`, or `README.md`
+
+### Suggested workflow
+
+1. Push this theme repo to GitHub
+2. Add the deployment secrets
+3. Push future changes to `main`
+4. GitHub Actions will deploy the updated theme automatically
+
+### Important note
+
+The workflow currently uploads changed files but does not force-delete removed files on the live server. This is safer for live deployment.
+
 ## Version
 
 Current theme version: `1.0.0`

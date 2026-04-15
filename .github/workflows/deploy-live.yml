@@ -1,0 +1,81 @@
+name: Deploy Theme To Live Site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-live-theme
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate PHP syntax
+        run: |
+          set -eu
+          find . -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Install lftp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Validate deployment secrets
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+        run: |
+          set -eu
+
+          missing=""
+
+          [ -n "$DEPLOY_HOST" ] || missing="$missing DEPLOY_HOST"
+          [ -n "$DEPLOY_USERNAME" ] || missing="$missing DEPLOY_USERNAME"
+          [ -n "$DEPLOY_PASSWORD" ] || missing="$missing DEPLOY_PASSWORD"
+          [ -n "$DEPLOY_REMOTE_PATH" ] || missing="$missing DEPLOY_REMOTE_PATH"
+
+          if [ -n "$missing" ]; then
+            echo "Missing required GitHub Actions secrets:$missing"
+            exit 1
+          fi
+
+      - name: Deploy theme
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_PROTOCOL: ${{ secrets.DEPLOY_PROTOCOL }}
+          DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+        run: |
+          set -eu
+
+          DEPLOY_PORT="${DEPLOY_PORT:-22}"
+          DEPLOY_PROTOCOL="${DEPLOY_PROTOCOL:-sftp}"
+
+          lftp -u "$DEPLOY_USERNAME","$DEPLOY_PASSWORD" -p "$DEPLOY_PORT" "$DEPLOY_PROTOCOL://$DEPLOY_HOST" <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 2
+          set net:timeout 20
+          set net:reconnect-interval-base 5
+          set ssl:verify-certificate no
+          set sftp:auto-confirm yes
+          mirror -R ./ "$DEPLOY_REMOTE_PATH" \
+            --verbose \
+            --parallel=2 \
+            --exclude-glob .git \
+            --exclude-glob .gitignore \
+            --exclude-glob .github \
+            --exclude-glob README.md
+          bye
+          EOF
