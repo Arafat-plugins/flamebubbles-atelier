@@ -68,6 +68,7 @@ function flamebubbles_customize_single_product_hooks() {
 	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
 	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 50 );
 
+	add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 8 );
 	add_action( 'woocommerce_single_product_summary', 'flamebubbles_single_product_feature_list', 22 );
 	add_action( 'woocommerce_single_product_summary', 'flamebubbles_single_product_purchase_meta', 35 );
 }
@@ -84,19 +85,9 @@ function flamebubbles_get_single_product_feature_items( $product ) {
 		return array();
 	}
 
-	$feature_items      = array();
-	$short_description  = (string) $product->get_short_description();
-	$clean_description  = trim( wp_strip_all_tags( $short_description ) );
-	$default_highlights = array(
-		$product->is_in_stock()
-			? __( 'Live stock status with a ready-to-order checkout flow.', 'flamebubbles-atelier' )
-			: __( 'Available to order with a guided WooCommerce purchase flow.', 'flamebubbles-atelier' ),
-		$product->is_type( 'variable' )
-			? __( 'Choose your preferred size or option directly before checkout.', 'flamebubbles-atelier' )
-			: __( 'Fast quantity selection and direct add to cart controls.', 'flamebubbles-atelier' ),
-		__( 'Secure payment-ready checkout for desktop, tablet, and mobile.', 'flamebubbles-atelier' ),
-		__( 'Clean premium product presentation inspired by a modern editorial layout.', 'flamebubbles-atelier' ),
-	);
+	$feature_items     = array();
+	$short_description = (string) $product->get_short_description();
+	$clean_description = trim( wp_strip_all_tags( $short_description ) );
 
 	if ( $short_description && preg_match_all( '/<li[^>]*>(.*?)<\/li>/is', $short_description, $matches ) ) {
 		foreach ( $matches[1] as $feature_text ) {
@@ -120,23 +111,7 @@ function flamebubbles_get_single_product_feature_items( $product ) {
 		}
 	}
 
-	$feature_items = array_values( array_unique( array_filter( $feature_items ) ) );
-
-	if ( empty( $feature_items ) ) {
-		$feature_items = $default_highlights;
-	}
-
-	foreach ( $default_highlights as $default_highlight ) {
-		if ( count( $feature_items ) >= 4 ) {
-			break;
-		}
-
-		if ( ! in_array( $default_highlight, $feature_items, true ) ) {
-			$feature_items[] = $default_highlight;
-		}
-	}
-
-	return array_slice( $feature_items, 0, 4 );
+	return array_values( array_unique( array_filter( $feature_items ) ) );
 }
 
 /**
@@ -191,16 +166,6 @@ function flamebubbles_single_product_purchase_meta() {
 			<?php esc_html_e( 'Ask a question', 'flamebubbles-atelier' ); ?>
 		</a>
 	</div>
-
-	<p class="single-product-view__purchase-note">
-		<?php
-		echo esc_html(
-			$product->is_type( 'variable' )
-				? __( 'Select your options, adjust quantity, and add to cart from the same responsive purchase panel.', 'flamebubbles-atelier' )
-				: __( 'Adjust quantity and add to cart from the same responsive purchase panel with live WooCommerce updates.', 'flamebubbles-atelier' )
-		);
-		?>
-	</p>
 	<?php
 }
 

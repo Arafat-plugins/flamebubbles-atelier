@@ -10,6 +10,7 @@ get_header();
 
 <main id="primary" class="site-main site-main--home">
 	<?php get_template_part( 'template-parts/hero' ); ?>
+	<?php get_template_part( 'template-parts/featured-slider' ); ?>
 	<?php get_template_part( 'template-parts/category-grid' ); ?>
 	<?php get_template_part( 'template-parts/latest-products' ); ?>
 	<?php get_template_part( 'template-parts/featured-collection' ); ?>

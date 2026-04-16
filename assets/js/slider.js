@@ -39,6 +39,8 @@
 			const prev = slider.querySelector("[data-slider-prev]");
 			const next = slider.querySelector("[data-slider-next]");
 			const mobile = isMobileViewport();
+			// data-slider-always: keep arrows visible on desktop too
+			const always = slider.hasAttribute("data-slider-always");
 
 			slider.classList.toggle("is-mobile", mobile);
 
@@ -46,17 +48,19 @@
 				return;
 			}
 
-			prev.hidden = !mobile;
-			next.hidden = !mobile;
+			const shouldShow = mobile || always;
+			prev.hidden = !shouldShow;
+			next.hidden = !shouldShow;
 
-			if (!mobile) {
+			if (!shouldShow) {
 				prev.disabled = true;
 				next.disabled = true;
 				return;
 			}
 
 			prev.disabled = track.scrollLeft <= 4;
-			next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+			next.disabled =
+				track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
 		};
 
 		sliders.forEach(function (slider) {

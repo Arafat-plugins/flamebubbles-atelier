@@ -260,6 +260,7 @@ body.admin-bar .site-header {
 	grid-template-columns: auto 1fr auto;
 	align-items: center;
 	gap: var(--fb-space-5);
+	min-width: 0;
 }
 
 .site-header__brand {
@@ -310,6 +311,7 @@ body.admin-bar .site-header {
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--fb-space-5);
+	min-width: 0;
 }
 
 .primary-nav__menu,
@@ -318,6 +320,7 @@ body.admin-bar .site-header {
 	display: flex;
 	align-items: center;
 	gap: 1.25rem;
+	flex-wrap: nowrap;
 }
 
 .primary-nav__menu a,
@@ -570,7 +573,6 @@ body.admin-bar .site-header--home {
 	color: #d8b18d;
 }
 
-.section-heading__title,
 .archive-hero__title,
 .shop-hero__title,
 .hero-section__title,
@@ -578,6 +580,11 @@ body.admin-bar .site-header--home {
 .entry-article__title {
 	font-size: clamp(2.2rem, 4vw, 4.7rem);
 	max-width: 12ch;
+}
+
+.section-heading__title {
+	font-size: clamp(1.75rem, 2.3vw, 2.4rem);
+	max-width: 18ch;
 }
 
 .section-heading__text,
@@ -1771,4 +1778,122 @@ body.admin-bar .hero-section {
 .page-article__content {
 	padding-top: 0.5rem;
 	padding-bottom: 4rem;
+}
+
+/* ── Featured Slider ────────────────────────────────────── */
+
+.featured-slider-section {
+	padding: clamp(2.75rem, 4vw, 4.5rem) 0;
+	background: var(--fb-surface);
+}
+
+.featured-slider {
+	display: grid;
+	gap: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.featured-slider__header {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1.5rem;
+}
+
+.featured-slider__meta {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.featured-slider__eyebrow {
+	margin: 0;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--fb-accent);
+}
+
+.featured-slider__title {
+	margin: 0;
+	font-size: clamp(1.85rem, 2.5vw, 2.5rem);
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+.featured-slider__actions {
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+	flex-shrink: 0;
+}
+
+.featured-slider__view-all {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--fb-ink);
+	text-decoration: underline;
+	text-underline-offset: 0.22em;
+	white-space: nowrap;
+}
+
+.featured-slider__view-all:hover {
+	color: var(--fb-accent);
+}
+
+.featured-slider__nav {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.featured-slider__btn {
+	display: inline-grid;
+	place-items: center;
+	width: 2.85rem;
+	height: 2.85rem;
+	padding: 0;
+	border: 1px solid var(--fb-line);
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.9);
+	color: var(--fb-ink);
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.featured-slider__btn:hover {
+	background: var(--fb-dark);
+	border-color: var(--fb-dark);
+	color: #fff;
+	transform: none;
+}
+
+.featured-slider__btn:active {
+	transform: scale(0.92);
+}
+
+.featured-slider__btn:disabled {
+	opacity: 0.35;
+	cursor: default;
+	pointer-events: none;
+}
+
+.featured-slider__track {
+	display: grid;
+	grid-auto-flow: column;
+	/* 4 cards visible; slight underfit so the 5th peeks in */
+	grid-auto-columns: calc(25% - 1.2rem);
+	gap: 1.4rem;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	-webkit-overflow-scrolling: touch;
+	padding-bottom: 0.4rem;
+}
+
+.featured-slider__track::-webkit-scrollbar {
+	display: none;
+}
+
+.featured-slider__track > * {
+	scroll-snap-align: start;
+	min-width: 0;
 }

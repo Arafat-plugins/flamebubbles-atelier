@@ -38,10 +38,11 @@ function flamebubbles_customize_register( $wp_customize ) {
 	);
 
 	$sections = array(
-		'flamebubbles_header'        => __( 'Home Header', 'flamebubbles-atelier' ),
-		'flamebubbles_hero'          => __( 'Hero Section', 'flamebubbles-atelier' ),
-		'flamebubbles_category_grid' => __( 'Category Mosaic', 'flamebubbles-atelier' ),
-		'flamebubbles_latest'        => __( 'Latest Products', 'flamebubbles-atelier' ),
+		'flamebubbles_header'          => __( 'Home Header', 'flamebubbles-atelier' ),
+		'flamebubbles_hero'            => __( 'Hero Section', 'flamebubbles-atelier' ),
+		'flamebubbles_featured_slider' => __( 'Featured Slider', 'flamebubbles-atelier' ),
+		'flamebubbles_category_grid'   => __( 'Category Mosaic', 'flamebubbles-atelier' ),
+		'flamebubbles_latest'          => __( 'Latest Products', 'flamebubbles-atelier' ),
 		'flamebubbles_collections'   => __( 'Collection Sections', 'flamebubbles-atelier' ),
 		'flamebubbles_why'           => __( 'Why Choose Us', 'flamebubbles-atelier' ),
 		'flamebubbles_testimonials'  => __( 'Testimonials', 'flamebubbles-atelier' ),
@@ -124,6 +125,15 @@ function flamebubbles_customize_register( $wp_customize ) {
 				array( 'id' => 'hero_watermark', 'label' => __( 'Hero Watermark Text', 'flamebubbles-atelier' ), 'type' => 'text', 'default' => $defaults['hero_watermark'], 'sanitize' => 'sanitize_text_field' ),
 				array( 'id' => 'hero_empty_title', 'label' => __( 'Hero Empty-State Title', 'flamebubbles-atelier' ), 'type' => 'text', 'default' => $defaults['hero_empty_title'], 'sanitize' => 'sanitize_text_field' ),
 				array( 'id' => 'hero_empty_text', 'label' => __( 'Hero Empty-State Text', 'flamebubbles-atelier' ), 'type' => 'textarea', 'default' => $defaults['hero_empty_text'], 'sanitize' => 'sanitize_textarea_field' ),
+			),
+		),
+		array(
+			'section'  => 'flamebubbles_featured_slider',
+			'settings' => array(
+				array( 'id' => 'fs_eyebrow', 'label' => __( 'Section Eyebrow', 'flamebubbles-atelier' ), 'type' => 'text', 'default' => $defaults['fs_eyebrow'], 'sanitize' => 'sanitize_text_field' ),
+				array( 'id' => 'fs_title', 'label' => __( 'Section Title', 'flamebubbles-atelier' ), 'type' => 'text', 'default' => $defaults['fs_title'], 'sanitize' => 'sanitize_text_field' ),
+				array( 'id' => 'fs_label', 'label' => __( 'View All Button Label', 'flamebubbles-atelier' ), 'type' => 'text', 'default' => $defaults['fs_label'], 'sanitize' => 'sanitize_text_field' ),
+				array( 'id' => 'fs_url', 'label' => __( 'View All Button URL', 'flamebubbles-atelier' ), 'type' => 'url', 'default' => '', 'sanitize' => 'esc_url_raw' ),
 			),
 		),
 		array(
